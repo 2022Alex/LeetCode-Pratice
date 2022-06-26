@@ -1,0 +1,35 @@
+import java.util.*;
+class Solution {
+    public int romanToInt(String s) {
+        Map<Character, Integer> map = new HashMap<Character, Integer>() {{
+            put('I',1);
+            put('V',5);
+            put('X',10);
+            put('L',50);
+            put('C',100);
+            put('D',500);
+            put('M',1000);
+        }};
+        
+        char[] c = s.toCharArray();
+        int result = 0;
+        int len = c.length;
+
+        for (int i = 0; i + 1 < len; i++) {
+            if(map.get(c[i]) == 1 && (map.get(c[i + 1]) == 5 || map.get(c[i + 1])== 10)){
+                result -= map.get(c[i]);
+            }
+            else if (map.get(c[i]) == 10 && (map.get(c[i + 1]) == 50 || map.get(c[i + 1]) == 100)){
+                result -= map.get(c[i]);
+            }
+            else if (map.get(c[i]) == 100 && (map.get(c[i + 1]) == 500 || map.get(c[i + 1]) == 1000)){
+                result -= map.get(c[i]);   
+            }
+            else {
+                result += map.get(c[i]);
+            }
+        }
+        
+        return result += map.get(c[len - 1]);
+    }
+}
